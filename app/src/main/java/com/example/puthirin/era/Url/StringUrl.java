@@ -6,6 +6,6 @@ package com.example.puthirin.era.Url;
 
 public class StringUrl {
 
-    public String URl ="192.168.43.182";
+    public String URl ="http://192.168.100.105:8000";
     public String Detail_BookID = URl+"";
 }
