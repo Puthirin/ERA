@@ -12,38 +12,49 @@
         android:id="@+id/imageView2"
         android:src="@drawable/era"/>
 
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <EditText
         android:id="@+id/eamil"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:ems="10"
+        android:layout_marginTop="200dp"
         android:background="@drawable/edittext"
         android:inputType="textEmailAddress"
-        android:layout_marginBottom="44dp"
         android:hint="email"
-        android:layout_above="@+id/password"
-        android:layout_alignStart="@+id/password" />
+        android:layout_gravity="center_horizontal"
+        />
     <EditText
         android:id="@+id/password"
+        android:layout_marginTop="30dp"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_weight="1"
+        android:layout_gravity="center_horizontal"
         android:ems="10"
         android:background="@drawable/edittext"
         android:inputType="textPassword"
-        android:layout_marginBottom="255dp"
         android:hint="Password"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        />
     <Button
+        android:layout_marginTop="20dp"
         android:layout_width="100dp"
         android:layout_height="30dp"
         android:background="@drawable/edittext"
         android:text="Login"
         android:id="@+id/login"
-        android:layout_marginTop="62dp"
-        android:layout_alignTop="@+id/password"
-        android:layout_centerHorizontal="true" />
+        android:layout_gravity="center_horizontal"
+         />
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:background="@drawable/edittext"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/register"/>
+</LinearLayout>
 
 </RelativeLayout>
