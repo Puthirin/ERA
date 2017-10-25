@@ -27,7 +27,8 @@
         <activity
             android:name=".Register"
             android:label="Register" />
-        <activity android:name=".BookDetail"></activity>
+        <activity android:name=".BookDetail" />
+        <activity android:name=".UserActivity"></activity>
     </application>
 
 </manifest>

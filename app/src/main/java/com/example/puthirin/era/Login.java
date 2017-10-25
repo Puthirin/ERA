@@ -1,23 +1,21 @@
 package com.example.puthirin.era;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,71 +23,94 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Login extends AppCompatActivity implements View.OnClickListener{
-    Button btn;
+import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
+
+public class Login extends AppCompatActivity{
+    private Button login,register;
     Intent intent;
     EditText email, password;
-    TextView Register;
-    String URL="http://192.168.100.105:8000/user_login";
-    StringRequest request;
-    RequestQueue requestQueue;
-    public static final String EMAIL = "email";
-    public static final String PASSWORD = "password";
-
-
+    private static final String TAG = "Login";
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        requestQueue = Volley.newRequestQueue(this);
-        email = (EditText)findViewById(R.id.eamil);
-        password = (EditText)findViewById(R.id.password);
-        btn = (Button)findViewById(R.id.login);
-        Register =(TextView) findViewById(R.id.register);
-        btn.setOnClickListener(this);
-        Register.setOnClickListener(this);
-
-
-    }
-
-
-    @Override
-    public void onClick(View v) {
-
-        userLogin(email.getText().toString(), password.getText().toString());
-    }
-
-    private void userLogin(final String email,final String password) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+        email =  (EditText) findViewById(R.id.email);
+        password = (EditText) findViewById(R.id.password);
+        login = (Button)findViewById(R.id.login);
+        register = (Button) findViewById(R.id.register);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(String s) {
-                if (s.trim().equals("success")) {
-                    Intent intent = new Intent(Login.this, MainActivity.class);
-                    intent.putExtra(EMAIL, email);
-                    intent.putExtra(PASSWORD, password);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(Login.this, s, Toast.LENGTH_SHORT).show();
-                }
+            public void onClick(View v) {
+                loginUser(email.getText().toString(),password.getText().toString());
             }
 
 
+        });
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent regiser = new Intent(getApplicationContext(), Register.class);
+                startActivity(regiser);
+            }
+        });
+    }
+
+    private void loginUser(final String email, final String password) {
+        String cancel_reg_tag = "Login";
+        progressDialog.setMessage("Successful");
+        showDialog();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Register Response"+response.toString());
+                hideDialog();
+                try{
+                    JSONObject jsonObject = new JSONObject(response);
+                    boolean error = jsonObject.getBoolean("error");
+                    if (!error){
+                        String user = jsonObject.getJSONObject("user").getString("name");
+                        Intent intent = new Intent(Login.this, UserActivity.class);
+                        intent.putExtra("username",user);
+                        startActivity(intent);
+                        finish();
+                    }else {
+                        String errorMsg = jsonObject.getString("error");
+                        Toast.makeText(getApplicationContext(),errorMsg, Toast.LENGTH_SHORT).show();
+                    }
+
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(Login.this, volleyError.toString(), Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "Login Error: "+ volleyError.getMessage());
+                Toast.makeText(getApplicationContext(), volleyError.getMessage(), Toast.LENGTH_LONG).show();
+                hideDialog();
             }
         }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String, String> map = new HashMap<String, String>();
-                map.put("email", email);
-                map.put("password", password);
-                return map;
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("email", email);
+                params.put("password", password);
+                return params;
             }
         };
-        requestQueue.add(stringRequest);
+
     }
+
+    private void hideDialog() {
+        if (progressDialog.isShowing())progressDialog.show();
+    }
+    private void showDialog() {
+        if (progressDialog.isShowing())progressDialog.dismiss();
+    }
+
+
 }
