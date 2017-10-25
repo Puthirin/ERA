@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "482112291739",
+    "firebase_url": "https://library-eea46.firebaseio.com",
+    "project_id": "library-eea46",
+    "storage_bucket": "library-eea46.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:482112291739:android:ca3c1ab39cff9a73",
+        "android_client_info": {
+          "package_name": "com.example.puthirin.era"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "482112291739-7av3g9qj21h0cvnspglslgrqfdrm8j6f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABNLlN-TT4XQOtreqoHl8IoTbYU6B44R0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

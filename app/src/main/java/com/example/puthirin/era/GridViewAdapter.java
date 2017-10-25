@@ -27,7 +27,7 @@ public class GridViewAdapter extends ArrayAdapter<Books> {
 
         if(null == v) {
             LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = inflater.inflate(R.layout.grid_item, null);
+            v = inflater.inflate(R.layout.grid_view, null);
         }
         Books book = getItem(position);
         ImageView img = (ImageView) v.findViewById(R.id.imageView);
