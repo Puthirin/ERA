@@ -21,16 +21,28 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URL;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     TextView textView;
     LinearLayout linearLayout;
+    String url = "http://192.168.0.107:8000/book_get";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
-        textView.setText("Hello"+intent.getStringExtra(Login.EMAIL));
+//        textView.setText("Hello"+intent.getStringExtra(Login.EMAIL));
 
         linearLayout = (LinearLayout)findViewById(R.id.linear);
         String btnt[]={
@@ -72,6 +84,27 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        StringRequest request  = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String s) {
+                System.out.println(s);
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    JSONArray jsonArray = new JSONArray("name");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        System.out.println(jsonArray.get(i).toString());
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                System.out.println(volleyError.toString());
+            }
+        });
     }
 
     @Override
