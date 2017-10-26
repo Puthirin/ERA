@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
-        textView.setText("Hello"+intent.getStringExtra(Login.EMAIL));
+//        textView.setText("Hello"+intent.getStringExtra(Login.EMAIL));
 
         linearLayout = (LinearLayout)findViewById(R.id.linear);
         String btnt[]={
