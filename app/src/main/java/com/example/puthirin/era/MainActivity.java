@@ -8,7 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
+import android.support.v4.view .GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -36,11 +36,12 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     TextView textView;
     LinearLayout linearLayout;
-    String url = "http://192.168.0.107:8000/book_get";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        String url = "http://192.168.100.105/book_get";
         Intent intent = getIntent();
 //        textView.setText("Hello"+intent.getStringExtra(Login.EMAIL));
 
@@ -91,7 +92,7 @@ public class MainActivity extends AppCompatActivity
                 System.out.println(s);
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    JSONArray jsonArray = new JSONArray("name");
+                    JSONArray jsonArray = new JSONArray("title");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         System.out.println(jsonArray.get(i).toString());
                     }

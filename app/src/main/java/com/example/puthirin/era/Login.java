@@ -41,6 +41,7 @@ public class Login extends AppCompatActivity{
         login = (Button)findViewById(R.id.login);
         register = (Button) findViewById(R.id.register);
         progressDialog = new ProgressDialog(this);
+        String URL = "http://192.168.100.105/user_login";
         progressDialog.setCancelable(false);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +74,7 @@ public class Login extends AppCompatActivity{
                     boolean error = jsonObject.getBoolean("error");
                     if (!error){
                         String user = jsonObject.getJSONObject("user").getString("name");
-                        Intent intent = new Intent(Login.this, UserActivity.class);
+                        Intent intent = new Intent(Login.this, MainActivity.class);
                         intent.putExtra("username",user);
                         startActivity(intent);
                         finish();
@@ -102,7 +103,7 @@ public class Login extends AppCompatActivity{
                 return params;
             }
         };
-
+        AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest,cancel_reg_tag);
     }
 
     private void hideDialog() {

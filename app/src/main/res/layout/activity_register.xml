@@ -24,6 +24,7 @@
         android:background="@drawable/edittext"
         android:layout_gravity="center_horizontal"
         android:hint="First name"
+        android:id="@+id/firstName"
         />
     <EditText
         android:layout_width="wrap_content"
@@ -32,13 +33,24 @@
         android:ems="10"
         android:background="@drawable/edittext"
         android:layout_gravity="center_horizontal"
-        android:hint="Last name"/>
+        android:hint="Last name"
+        android:id="@+id/lastName"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Phone Number"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/edittext"
+        android:id="@+id/tel"/>
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="Email"
+        android:id="@+id/email"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/edittext"
         />
@@ -49,6 +61,7 @@
         android:ems="10"
         android:inputType="textVisiblePassword"
         android:hint="password"
+        android:id="@+id/password"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/edittext"/>
     <Button
@@ -56,6 +69,7 @@
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
         android:text="Submit"
+        android:id="@+id/submit"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/edittext"/>
 
