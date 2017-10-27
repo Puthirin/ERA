@@ -26,7 +26,7 @@ import java.util.Map;
 
 public class Register extends AppCompatActivity {
     private  static final String TAG = "Register";
-    private static final String URL_Register = "http://192.168.100.105/user_register";
+    private static final String URL_Register = "http://192.168.0.117:8000/user_register";
     ProgressDialog progressDialog;
     private EditText firstName, lastName,tel,email, password;
     private Button Register;
@@ -46,17 +46,15 @@ public class Register extends AppCompatActivity {
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
 
-//        Register = (Button) findViewById(R.id.register);
-//
-//
-//        Register.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                submitForm();
-//            }
-//        });
-        
+        Register = (Button) findViewById(R.id.submit);
 
+
+        Register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitForm();
+            }
+        });
 
     }
 
@@ -71,7 +69,7 @@ public class Register extends AppCompatActivity {
         progressDialog.setMessage("Adding you");
         showDialog();
         
-        StringRequest strReq = new StringRequest(Request.Method.POST, URL_Register, new Response.Listener<String>() {
+        StringRequest strReq = new StringRequest(Request.Method.GET, URL_Register, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 Log.d(TAG, "Regiser Response: "+ s.toString());
@@ -81,7 +79,7 @@ public class Register extends AppCompatActivity {
                     JSONObject object = new JSONObject(s);
                     boolean error = object.getBoolean("error");
                     if (!error){
-                        String user = object.getJSONObject("user").getString("name");
+                        String user = object.getJSONObject("email").getString("email");
                         Toast.makeText(getApplicationContext(),"welcome" + user+"You are successful", Toast.LENGTH_LONG).show();
                         
                         Intent intent = new Intent(Register.this,Login.class);

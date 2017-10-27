@@ -41,7 +41,7 @@ public class Login extends AppCompatActivity{
         login = (Button)findViewById(R.id.login);
         register = (Button) findViewById(R.id.register);
         progressDialog = new ProgressDialog(this);
-        String URL = "http://192.168.100.105/user_login";
+        String URL = "http://192.168.0.117:8000/user_login";
         progressDialog.setCancelable(false);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
