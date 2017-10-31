@@ -12,9 +12,12 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 
 import org.json.JSONException;
@@ -31,7 +34,7 @@ public class Login extends AppCompatActivity{
     EditText email, password;
     private static final String TAG = "Login";
     ProgressDialog progressDialog;
-
+    String URL_login= "http://192.168.100.105:8000/user_login";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +44,9 @@ public class Login extends AppCompatActivity{
         login = (Button)findViewById(R.id.login);
         register = (Button) findViewById(R.id.register);
         progressDialog = new ProgressDialog(this);
-        String URL = "http://192.168.100.105:8000/user_login";
+
+
+
         progressDialog.setCancelable(false);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,49 +66,30 @@ public class Login extends AppCompatActivity{
     }
 
     private void loginUser(final String email, final String password) {
-        String cancel_reg_tag = "Login";
         progressDialog.setMessage("Successful");
         showDialog();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d(TAG, "Register Response"+response.toString());
-                hideDialog();
-                try{
-                    JSONObject jsonObject = new JSONObject(response);
-                    boolean error = jsonObject.getBoolean("error");
-                    if (!error){
-                        String user = jsonObject.getJSONObject("user").getString("name");
-                        Intent intent = new Intent(Login.this, MainActivity.class);
-                        intent.putExtra("username",user);
-                        startActivity(intent);
-                        finish();
-                    }else {
-                        String errorMsg = jsonObject.getString("error");
-                        Toast.makeText(getApplicationContext(),errorMsg, Toast.LENGTH_SHORT).show();
-                    }
+        JSONObject params = new JSONObject();
+        try {
 
-                }catch (JSONException e){
-                    e.printStackTrace();
-                }
+            params.put("email",email);
+            params.put("password",password);
+        }catch (JSONException e){
+
+        }
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, URL_login, params, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                Toast.makeText(Login.this, "gg", Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.e(TAG, "Login Error: "+ volleyError.getMessage());
-                Toast.makeText(getApplicationContext(), volleyError.getMessage(), Toast.LENGTH_LONG).show();
-                hideDialog();
+                Toast.makeText(Login.this, volleyError.toString(), Toast.LENGTH_SHORT).show();
             }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("email", email);
-                params.put("password", password);
-                return params;
-            }
-        };
-        AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest,cancel_reg_tag);
+        });
+        queue.add(request);
     }
 
     private void hideDialog() {
