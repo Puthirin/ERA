@@ -64,7 +64,6 @@ public class Login extends AppCompatActivity{
             }
         });
     }
-
     private void loginUser(final String email, final String password) {
         progressDialog.setMessage("Successful");
         showDialog();
